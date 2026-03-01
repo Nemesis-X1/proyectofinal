@@ -13,6 +13,8 @@ class EmpresaSeeder extends Seeder
      */
     public function run(): void
     {
+        $moneda = \App\Models\Moneda::where('estandar_iso', 'BOB')->first();
+
         Empresa::updateOrCreate(
             ['ruc' => '1089674538'],
             [
@@ -21,7 +23,7 @@ class EmpresaSeeder extends Seeder
                 'porcentaje_impuesto' => '0',
                 'abreviatura_impuesto' => 'IGV',
                 'direccion' => 'Av. Los Pinos n°789',
-                'moneda_id' => 1
+                'moneda_id' => $moneda->id ?? 1
             ]
         );
     }

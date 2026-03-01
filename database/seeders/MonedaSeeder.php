@@ -20,6 +20,7 @@ class MonedaSeeder extends Seeder
             ['iso' => 'PEN', 'nombre' => 'Sol peruano', 'simbolo' => 'S/'],
             ['iso' => 'ARS', 'nombre' => 'Peso Argentino', 'simbolo' => '$'],
             ['iso' => 'CLP', 'nombre' => 'Peso Chileno', 'simbolo' => '$'],
+            ['iso' => 'BOB', 'nombre' => 'Boliviano', 'simbolo' => 'Bs.'],
         ];
 
         foreach ($monedas as $moneda) {
