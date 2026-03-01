@@ -1,0 +1,20 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Documento;
+use Illuminate\Database\Seeder;
+
+class DocumentoSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $documentos = ['DNI', 'Pasaporte', 'RUC', 'Carnet Extranjería'];
+        foreach ($documentos as $doc) {
+            Documento::firstOrCreate(['nombre' => $doc]);
+        }
+    }
+}
