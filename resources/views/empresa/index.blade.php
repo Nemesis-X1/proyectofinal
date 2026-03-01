@@ -35,12 +35,12 @@
                 <x-forms.input id="direccion" required='true' :defaultValue='$empresa->direccion' />
             </div>
 
-            <div class="col-md-6">
-                <x-forms.input id="porcentaje_impuesto" required='true' :defaultValue='$empresa->porcentaje_impuesto'
+            <div class="col-md-6" style="display: none;">
+                <x-forms.input id="porcentaje_impuesto" required='true' defaultValue='0'
                     type='number' labelText='Porcentaje del impuesto (%)' />
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6" style="display: none;">
                 <x-forms.input id="abreviatura_impuesto" required='true' :defaultValue='$empresa->abreviatura_impuesto'
                     labelText='Abreviatura del impuesto' />
             </div>

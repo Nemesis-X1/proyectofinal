@@ -18,7 +18,7 @@ class EmpresaSeeder extends Seeder
             [
                 'nombre' => 'SK SAC',
                 'propietario' => 'Sak Code',
-                'porcentaje_impuesto' => '15',
+                'porcentaje_impuesto' => '0',
                 'abreviatura_impuesto' => 'IGV',
                 'direccion' => 'Av. Los Pinos n°789',
                 'moneda_id' => 1

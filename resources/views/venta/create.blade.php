@@ -184,7 +184,7 @@
                                                 <span>{{$empresa->moneda->simbolo}}</span>
                                             </th>
                                         </tr>
-                                        <tr>
+                                        <tr style="display: none;">
                                             <th colspan="4">
                                                 {{$empresa->abreviatura_impuesto}} ({{$empresa->porcentaje_impuesto}})%
                                             </th>
@@ -323,7 +323,7 @@
     let arrayIdProductos = [];
 
     //Constantes
-    const impuesto = @json($empresa->porcentaje_impuesto);
+    const impuesto = 0;
 
     function mostrarValores() {
         let dataProducto = document.getElementById('producto_id').value.split('-');
