@@ -20,12 +20,6 @@
     </x-breadcrumb.template>
 
     <div class="mb-4">
-        <button type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#verPlanoModal">
-            Ver plano
-        </button>
         @can('ver-reporte-inventario')
         <a href="{{ route('inventario.reporte') }}" class="btn btn-secondary">
             <i class="fas fa-chart-line me-1"></i>Ver Reportes
@@ -87,33 +81,6 @@
 
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="verPlanoModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Plano de Ubicaciones</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <img src="{{ asset('assets/img/plano.png')}}" alt="Plano de ubicaciones"
-                                class="img-fluid img-thumbail border rounded">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 @endsection
 

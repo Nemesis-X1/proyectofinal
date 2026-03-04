@@ -30,9 +30,19 @@
                 @endcan
 
                 @can('ver-producto')
-                <x-nav.nav-link content='Productos'
-                    icon='fa-brands fa-shopify'
-                    :href="route('productos.index')" />
+                <x-nav.link-collapsed
+                    id="collapseProductos"
+                    icon="fa-brands fa-shopify"
+                    content="Productos">
+                    @can('ver-producto')
+                    <x-nav.link-collapsed-item :href="route('productos.index')" content="Ver" />
+                    @endcan
+
+                    @can('crear-producto')
+                    <x-nav.link-collapsed-item :href="route('productos.create')" content="Crear" />
+                    <x-nav.link-collapsed-item :href="route('productos.create', ['show_plano' => 1])" content="Plano de estantes" />
+                    @endcan
+                </x-nav.link-collapsed>
                 @endcan
 
                 @can('ver-inventario')

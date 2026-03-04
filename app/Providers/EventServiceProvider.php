@@ -6,8 +6,8 @@ use App\Events\CreateCompraDetalleEvent;
 use App\Events\CreateVentaDetalleEvent;
 use App\Events\CreateVentaEvent;
 use App\Listeners\CreateMovimientoVentaCajaListener;
-use App\Listeners\CreateRegistroCompraCardexListener;
-use App\Listeners\CreateRegistroVentaCardexListener;
+use App\Listeners\CreateRegistroCompraKardexListener;
+use App\Listeners\CreateRegistroVentaKardexListener;
 use App\Listeners\EnviarEmailClienteVentaListener;
 use App\Listeners\UpdateInventarioCompraListener;
 use App\Listeners\UpdateInventarioVentaListener;
@@ -28,11 +28,11 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         CreateCompraDetalleEvent::class => [
-            CreateRegistroCompraCardexListener::class,
+            CreateRegistroCompraKardexListener::class,
             UpdateInventarioCompraListener::class
         ],
         CreateVentaDetalleEvent::class => [
-            CreateRegistroVentaCardexListener::class,
+            CreateRegistroVentaKardexListener::class,
             UpdateInventarioVentaListener::class
         ],
         CreateVentaEvent::class => [

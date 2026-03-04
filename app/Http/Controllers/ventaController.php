@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class ventaController extends Controller
+class VentaController extends Controller
 {
     protected EmpresaService $empresaService;
 
@@ -130,9 +130,11 @@ class ventaController extends Controller
             CreateVentaEvent::dispatch($venta);
 
             DB::commit();
+            $empresa = $this->empresaService->obtenerEmpresa();
+            $simbolo = $empresa->moneda->simbolo;
             ActivityLogService::log('Creación de una venta', 'Ventas', $request->validated());
             return redirect()->route('movimientos.index', ['caja_id' => $venta->caja_id])
-                ->with('success', 'Venta registrada');
+                ->with('success', 'Venta registrada. Vuelto: ' . $simbolo . ' ' . $venta->vuelto_entregado);
         } catch (Throwable $e) {
             DB::rollBack();
             Log::error('Error al crear la venta', ['error' => $e->getMessage()]);

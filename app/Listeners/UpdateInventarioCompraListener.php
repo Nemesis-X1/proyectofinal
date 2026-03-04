@@ -21,9 +21,24 @@ class UpdateInventarioCompraListener
     {
         $registro = Inventario::where('producto_id', $event->producto_id)->first();
 
-        $registro->update([
-            'cantidad' => ($registro->cantidad + $event->cantidad),
-            'fecha_vencimiento' => $event->fecha_vencimiento
-        ]);
+        if (!$registro) {
+            $ubicacionDefault = \App\Models\Ubicacione::first();
+            Inventario::create([
+                'producto_id' => $event->producto_id,
+                'ubicacione_id' => $ubicacionDefault ? $ubicacionDefault->id : 1,
+                'cantidad' => $event->cantidad,
+                'fecha_vencimiento' => $event->fecha_vencimiento,
+                'margen_porcentaje' => $event->margen_porcentaje,
+                'margen_fijo' => $event->margen_fijo,
+                'estado' => true,
+            ]);
+        } else {
+            $registro->update([
+                'cantidad' => ($registro->cantidad + $event->cantidad),
+                'fecha_vencimiento' => $event->fecha_vencimiento,
+                'margen_porcentaje' => $event->margen_porcentaje,
+                'margen_fijo' => $event->margen_fijo,
+            ]);
+        }
     }
 }

@@ -13,10 +13,10 @@ class InventarioObserver
      */
     public function created(Inventario $inventario): void
     {
-        //Cada vez que se cree un producto, el producto asociado se inicializa
+        //Sincronizar estado del producto con su inventario.
         Producto::where('id', $inventario->producto_id)
             ->update([
-                'estado' => 1,  //CAMBIO AQUI
+                'estado' => (int)$inventario->estado,
             ]);
     }
 
@@ -33,8 +33,18 @@ class InventarioObserver
         $producto = Producto::findOrfail($inventario->producto_id);
         $kardex = new Kardex();
 
+        // Evita sobrescribir manualmente el precio de venta inicial del producto.
+        if (!is_null($producto->precio)) {
+            return;
+        }
+
+        $precioCalculado = $kardex->calcularPrecioVenta($producto->id);
+        if ($precioCalculado <= 0) {
+            return;
+        }
+
         $producto->update([
-            'precio' => $kardex->calcularPrecioVenta($producto->id)
+            'precio' => $precioCalculado,
         ]);
     }
 

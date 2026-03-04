@@ -17,13 +17,11 @@ use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Throwable;
 
-class InventarioControlller extends Controller
+class InventarioController extends Controller
 {
     function __construct()
     {
         $this->middleware('permission:ver-inventario|crear-inventario|editar-inventario|ajustar-inventario|ver-reporte-inventario', ['only' => ['index']]);
-        $this->middleware('check_producto_inicializado', ['only' => ['create', 'store']]);
-        $this->middleware('permission:crear-inventario', ['only' => ['create', 'store']]);
         $this->middleware('permission:editar-inventario', ['only' => ['edit', 'update']]);
         $this->middleware('permission:ver-reporte-inventario', ['only' => ['reporte', 'exportarReportePDF']]);
     }
@@ -36,34 +34,6 @@ class InventarioControlller extends Controller
         return view('inventario.index', compact('inventario'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request): View
-    {
-        $producto = Producto::findOrfail($request->producto_id);
-        $ubicaciones = Ubicacione::all();
-        return view('inventario.create', compact('producto', 'ubicaciones'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreInventarioRequest $request, Kardex $kardex): RedirectResponse
-    {
-        DB::beginTransaction();
-        try {
-            $kardex->crearRegistro($request->validated(), TipoTransaccionEnum::Apertura);
-            Inventario::create($request->validated());
-            DB::commit();
-            ActivityLogService::log('Inicialiación de producto', 'Productos', $request->validated());
-            return redirect()->route('productos.index')->with('success', 'Producto inicializado');
-        } catch (Throwable $e) {
-            DB::rollBack();
-            Log::error('Error al inicializar el producto', ['error' => $e->getMessage()]);
-            return redirect()->route('productos.index')->with('error', 'Ups, algo falló');
-        }
-    }
 
     /**
      * Display the specified resource.

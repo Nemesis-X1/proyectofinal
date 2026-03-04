@@ -23,7 +23,9 @@ class CreateCompraDetalleEvent
         public $producto_id,
         public $cantidad,
         public $precio_compra,
-        public $fecha_vencimiento
+        public $fecha_vencimiento,
+        public $margen_porcentaje = null,
+        public $margen_fijo = null
     ) {}
 
     /**

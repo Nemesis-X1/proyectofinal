@@ -79,15 +79,6 @@
                                 </button>
                                 @endcan
 
-                                <!------Inicializar producto---->
-                                @can('crear-inventario')
-                                <form action="{{route('inventario.create')}}" method="get" class="d-inline">
-                                    <input type="hidden" name="producto_id" value="{{$item->id}}">
-                                    <button title="Inicializar Inventario" class="btn btn-dark btn-sm" type="submit">
-                                        <i class="fa-solid fa-rotate"></i>
-                                    </button>
-                                </form>
-                                @endcan
                             </div>
                         </td>
                     </tr>

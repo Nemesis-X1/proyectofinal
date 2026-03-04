@@ -20,7 +20,7 @@ class Kardex extends Model
 
     public function producto(): BelongsTo
     {
-        return $this->belongsTo(Kardex::class);
+        return $this->belongsTo(Producto::class);
     }
 
     public function getFechaAttribute(): string
@@ -73,9 +73,11 @@ class Kardex extends Model
                 'salida' => $salida,
                 'saldo' => $saldo,
                 'costo_unitario' => $data['costo_unitario'],
+                'margen_porcentaje' => $data['margen_porcentaje'] ?? null,
+                'margen_fijo' => $data['margen_fijo'] ?? null,
             ]);
         } catch (Exception $e) {
-            Log::error('Error al crear un registro en el cardex', ['error' => $e->getMessage()]);
+            Log::error('Error al crear un registro en el kardex', ['error' => $e->getMessage()]);
         }
     }
 
@@ -120,11 +122,19 @@ class Kardex extends Model
 
         if (!$ultimoRegistro) {
             $producto = Producto::find($producto_id);
-            return $producto ? $producto->precio : 0.0;
+            return $producto ? (float)$producto->precio : 0.0;
         }
 
-        $costoUltimoRegistro = $ultimoRegistro->costo_unitario;
+        $costoUltimoRegistro = (float)$ultimoRegistro->costo_unitario;
 
-        return $costoUltimoRegistro + round($costoUltimoRegistro * self::MARGEN_GANANCIA, 2);
+        // Priorizar margen fijo si existe
+        if ($ultimoRegistro->margen_fijo > 0) {
+            return $costoUltimoRegistro + (float)$ultimoRegistro->margen_fijo;
+        }
+
+        // Usar margen porcentaje o el predeterminado
+        $margen = $ultimoRegistro->margen_porcentaje ?? (self::MARGEN_GANANCIA * 100);
+        
+        return $costoUltimoRegistro + round($costoUltimoRegistro * ($margen / 100), 2);
     }
 }

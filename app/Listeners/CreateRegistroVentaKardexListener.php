@@ -8,7 +8,7 @@ use App\Models\Kardex;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class CreateRegistroVentaCardexListener
+class CreateRegistroVentaKardexListener
 {
     /**
      * Create the event listener.

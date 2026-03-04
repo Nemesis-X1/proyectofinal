@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class compraController extends Controller
+class CompraController extends Controller
 {
     protected EmpresaService $empresaService;
 
@@ -93,16 +93,20 @@ class compraController extends Controller
             $arrayCantidad = $request->get('arraycantidad');
             $arrayPrecioCompra = $request->get('arraypreciocompra');
             $arrayFechaVencimiento = $request->get('arrayfechavencimiento');
-            //2.Realizar el llenado
+            $arrayMargenPorcentaje = $request->get('arraymargenporcentaje');
+            $arrayMargenFijo = $request->get('arraymargenfijo');
 
-            $siseArray = count($arrayProducto_id);
+            //2.Realizar el llenado
+            $sizeArray = count($arrayProducto_id);
             $cont = 0;
-            while ($cont < $siseArray) {
+            while ($cont < $sizeArray) {
                 $compra->productos()->syncWithoutDetaching([
                     $arrayProducto_id[$cont] => [
                         'cantidad' => $arrayCantidad[$cont],
                         'precio_compra' => $arrayPrecioCompra[$cont],
-                        'fecha_vencimiento' => $arrayFechaVencimiento[$cont]
+                        'fecha_vencimiento' => $arrayFechaVencimiento[$cont],
+                        'margen_porcentaje' => $arrayMargenPorcentaje[$cont] ?? null,
+                        'margen_fijo' => $arrayMargenFijo[$cont] ?? null,
                     ]
                 ]);
 
@@ -112,7 +116,9 @@ class compraController extends Controller
                     $arrayProducto_id[$cont],
                     $arrayCantidad[$cont],
                     $arrayPrecioCompra[$cont],
-                    $arrayFechaVencimiento[$cont]
+                    $arrayFechaVencimiento[$cont],
+                    $arrayMargenPorcentaje[$cont] ?? null,
+                    $arrayMargenFijo[$cont] ?? null
                 );
 
                 $cont++;

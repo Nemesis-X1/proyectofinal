@@ -21,14 +21,21 @@
         <li class="breadcrumb-item active">Crear producto</li>
     </ol>
 
+    <div class="mb-4">
+        <button type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#verPlanoModal">
+            Ver plano de estantes
+        </button>
+    </div>
+
     <div class="card">
         <form action="{{ route('productos.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="card-body text-bg-light">
 
                 <div class="row g-4">
-
-                    <!---Nombre---->
                     <div class="col-12">
                         <label for="nombre" class="form-label">Nombre:</label>
                         <input type="text" name="nombre" id="nombre" class="form-control" value="{{old('nombre')}}">
@@ -37,26 +44,20 @@
                         @enderror
                     </div>
 
-                    <!---Descripción---->
                     <div class="col-12">
-                        <label for="descripcion" class="form-label">Descripción:</label>
+                        <label for="descripcion" class="form-label">Descripcion:</label>
                         <textarea name="descripcion" id="descripcion" rows="3" class="form-control">{{old('descripcion')}}</textarea>
                         @error('descripcion')
                         <small class="text-danger">{{'*'.$message}}</small>
                         @enderror
                     </div>
-
                 </div>
 
                 <br>
 
                 <div class="row g-4">
-
                     <div class="col-md-6">
-
                         <div class="row g-4">
-
-                            <!---Imagen---->
                             <div class="col-12">
                                 <label for="img_path" class="form-label">Imagen:</label>
                                 <input type="file" name="img_path" id="img_path" class="form-control" accept="image/*">
@@ -65,16 +66,14 @@
                                 @enderror
                             </div>
 
-                            <!----Codigo---->
                             <div class="col-12">
-                                <label for="codigo" class="form-label">Código:</label>
+                                <label for="codigo" class="form-label">Codigo:</label>
                                 <input type="text" name="codigo" id="codigo" class="form-control" value="{{old('codigo')}}">
                                 @error('codigo')
                                 <small class="text-danger">{{'*'.$message}}</small>
                                 @enderror
                             </div>
 
-                            <!---Marca---->
                             <div class="col-12">
                                 <label for="marca_id" class="form-label">Marca:</label>
                                 <select data-size="4"
@@ -93,11 +92,10 @@
                                 @enderror
                             </div>
 
-                            <!---Presentaciones---->
                             <div class="col-12">
-                                <label for="presentacione_id" class="form-label">Presentación:</label>
+                                <label for="presentacione_id" class="form-label">Presentacion:</label>
                                 <select data-size="4"
-                                    title="Seleccione una presentación"
+                                    title="Seleccione una presentacion"
                                     data-live-search="true"
                                     name="presentacione_id"
                                     id="presentacione_id"
@@ -113,16 +111,15 @@
                                 @enderror
                             </div>
 
-                            <!---Categorías---->
                             <div class="col-12">
-                                <label for="categoria_id" class="form-label">Categoría:</label>
+                                <label for="categoria_id" class="form-label">Categoria:</label>
                                 <select data-size="4"
-                                    title="Seleccione la categoría"
+                                    title="Seleccione la categoria"
                                     data-live-search="true"
                                     name="categoria_id"
                                     id="categoria_id"
                                     class="form-control selectpicker show-tick">
-                                    <option value="">No tiene categoría</option>
+                                    <option value="">No tiene categoria</option>
                                     @foreach ($categorias as $item)
                                     <option value="{{$item->id}}" {{ old('categoria_id') == $item->id ? 'selected' : '' }}>
                                         {{$item->nombre}}
@@ -133,12 +130,39 @@
                                 <small class="text-danger">{{'*'.$message}}</small>
                                 @enderror
                             </div>
-                        </div>
 
+                            <div class="col-12">
+                                <label for="ubicacione_id" class="form-label">Ubicacion:</label>
+                                <select data-size="6"
+                                    title="Seleccione una ubicacion"
+                                    data-live-search="true"
+                                    name="ubicacione_id"
+                                    id="ubicacione_id"
+                                    class="form-control selectpicker show-tick">
+                                    @foreach ($ubicaciones as $item)
+                                    <option value="{{$item->id}}" {{ old('ubicacione_id') == $item->id ? 'selected' : '' }}>
+                                        {{$item->nombre}}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('ubicacione_id')
+                                <small class="text-danger">{{'*'.$message}}</small>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="estado" class="form-label">Estado:</label>
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="estado" value="0">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="estado" name="estado" value="1" {{ old('estado', '1') == '1' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="estado">Activo (Visible para ventas)</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="col-md-6">
                         <p>Imagen del producto:</p>
-
                         <img id="img-default"
                             class="img-fluid"
                             src="{{ asset('assets/img/paisaje.png') }}"
@@ -147,9 +171,7 @@
                         <img src="" alt="Ha cargado un archivo no compatible"
                             id="img-preview"
                             class="img-fluid img-thumbnail" style="display: none;">
-
                     </div>
-
                 </div>
             </div>
 
@@ -159,7 +181,30 @@
         </form>
     </div>
 
-
+    <div class="modal fade" id="verPlanoModal"
+        tabindex="-1"
+        aria-labelledby="verPlanoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="verPlanoModalLabel">Plano de ubicaciones</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <img src="{{ asset('assets/img/plano.png')}}" alt="Plano de ubicaciones"
+                                class="img-fluid img-thumbail border rounded">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -169,6 +214,7 @@
     const inputImagen = document.getElementById('img_path');
     const imagenPreview = document.getElementById('img-preview');
     const imagenDefault = document.getElementById('img-default');
+    const openPlanoFromMenu = {{ request()->boolean('show_plano') ? 'true' : 'false' }};
 
     inputImagen.addEventListener('change', function() {
         if (this.files && this.files[0]) {
@@ -182,5 +228,10 @@
             reader.readAsDataURL(this.files[0]);
         }
     });
+
+    if (openPlanoFromMenu) {
+        const modal = new bootstrap.Modal(document.getElementById('verPlanoModal'));
+        modal.show();
+    }
 </script>
 @endpush

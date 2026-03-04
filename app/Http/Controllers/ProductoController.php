@@ -8,6 +8,7 @@ use App\Models\Categoria;
 use App\Models\Marca;
 use App\Models\Presentacione;
 use App\Models\Producto;
+use App\Models\Ubicacione;
 use App\Services\ActivityLogService;
 use App\Services\ProductoService;
 use Illuminate\Contracts\View\View;
@@ -63,7 +64,9 @@ class ProductoController extends Controller
             ->where('c.estado', 1)
             ->get();
 
-        return view('producto.create', compact('marcas', 'presentaciones', 'categorias'));
+        $ubicaciones = Ubicacione::orderBy('nombre')->get();
+
+        return view('producto.create', compact('marcas', 'presentaciones', 'categorias', 'ubicaciones'));
     }
 
     /**

@@ -8,7 +8,7 @@ use App\Models\Kardex;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class CreateRegistroCompraCardexListener
+class CreateRegistroCompraKardexListener
 {
     /**
      * Create the event listener.
@@ -26,7 +26,9 @@ class CreateRegistroCompraCardexListener
                 'producto_id' => $event->producto_id,
                 'compra_id' => $event->compra->id,
                 'cantidad' => $event->cantidad,
-                'costo_unitario' => $event->precio_compra
+                'costo_unitario' => $event->precio_compra,
+                'margen_porcentaje' => $event->margen_porcentaje,
+                'margen_fijo' => $event->margen_fijo,
             ],
             TipoTransaccionEnum::Compra
         );

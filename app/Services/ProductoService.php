@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Inventario;
 use App\Models\Producto;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductoService
@@ -13,17 +15,31 @@ class ProductoService
      */
     public function crearProducto(array $data): Producto
     {
-        $producto = Producto::create([
-            'codigo' => $data['codigo'],
-            'nombre' => $data['nombre'],
-            'descripcion' => $data['descripcion'],
-            'img_path' => isset($data['img_path']) && $data['img_path']
-                ? $this->handleUploadImage($data['img_path'])
-                : null,
-            'marca_id' => $data['marca_id'],
-            'categoria_id' => $data['categoria_id'],
-            'presentacione_id' => $data['presentacione_id'],
-        ]);
+        $producto = DB::transaction(function () use ($data) {
+            $estadoProducto = array_key_exists('estado', $data) ? (int)$data['estado'] : 0;
+
+            $producto = Producto::create([
+                'codigo' => $data['codigo'],
+                'nombre' => $data['nombre'],
+                'descripcion' => $data['descripcion'],
+                'img_path' => isset($data['img_path']) && $data['img_path']
+                    ? $this->handleUploadImage($data['img_path'])
+                    : null,
+                'marca_id' => $data['marca_id'],
+                'categoria_id' => $data['categoria_id'],
+                'presentacione_id' => $data['presentacione_id'],
+                'estado' => $estadoProducto,
+            ]);
+
+            Inventario::create([
+                'producto_id' => $producto->id,
+                'ubicacione_id' => $data['ubicacione_id'],
+                'cantidad' => 0,
+                'estado' => (bool)$estadoProducto,
+            ]);
+
+            return $producto;
+        });
 
         return $producto;
     }

@@ -19,7 +19,7 @@ class Producto extends Model
     {
         return $this->belongsToMany(Compra::class)
             ->withTimestamps()
-            ->withPivot('cantidad', 'precio_compra', 'fecha_vencimiento');
+            ->withPivot('cantidad', 'precio_compra', 'fecha_vencimiento', 'margen_porcentaje', 'margen_fijo');
     }
 
     public function ventas(): BelongsToMany

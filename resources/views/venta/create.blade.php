@@ -127,7 +127,7 @@
                                     <label for="precio" class="col-form-label col-4">
                                         Precio:</label>
                                     <div class="col-8">
-                                        <input disabled id="precio"
+                                        <input id="precio"
                                             type="number" class="form-control"
                                             step="any">
                                     </div>
