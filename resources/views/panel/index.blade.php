@@ -111,7 +111,16 @@
             <div class="dash-card">
                 <div class="dash-card-icon bg-red">
                     <i class="fa-solid fa-user"></i>
-<<<<<<< HEAD
+                </div>
+                <div class="dash-card-content">
+                    <p class="dash-card-category">Usuarios</p>
+                    <h3 class="dash-card-title">
+                        <?php
+                        use App\Models\User;
+                        echo count(User::all());
+                        ?>
+                    </h3>
+                </div>
                 <div class="dash-card-footer">
                     <i class="fas fa-user-shield"></i> Control activo
                 </div>
