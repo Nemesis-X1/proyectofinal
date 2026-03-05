@@ -100,6 +100,18 @@
                             {{$venta->total}} {{$empresa->moneda->simbolo}}
                         </th>
                     </tr>
+                    <tr>
+                        <th colspan="4">Dinero recibido:</th>
+                        <th>
+                            {{$venta->monto_recibido}} {{$empresa->moneda->simbolo}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="4">Vuelto:</th>
+                        <th>
+                            {{$venta->vuelto_entregado}} {{$empresa->moneda->simbolo}}
+                        </th>
+                    </tr>
                 </tfoot>
             </table>
         </div>

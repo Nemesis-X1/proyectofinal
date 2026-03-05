@@ -25,7 +25,7 @@ class CreateMovimientoVentaCajaListener
      */
     public function handle(CreateVentaEvent $event): void
     {
-        $caja_id = Caja::where('user_id', Auth::id())->where('estado', 1)->first()->id;
+        $caja_id = $event->venta->caja_id;
 
         try {
             Movimiento::create([

@@ -16,6 +16,10 @@ class Venta extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    
+    protected $casts = [
+        'metodo_pago' => \App\Enums\MetodoPagoEnum::class,
+    ];
 
     public function caja(): BelongsTo
     {
