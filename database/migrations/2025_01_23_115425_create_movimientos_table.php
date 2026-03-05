@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('tipo', ['VENTA', 'RETIRO']);
             $table->string('descripcion');
             $table->decimal('monto');
-            $table->enum('metodo_pago', ['EFECTIVO', 'TARJETA']);
+            $table->enum('metodo_pago', ['EFECTIVO', 'QR']);
             $table->foreignId('caja_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

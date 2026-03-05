@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement("ALTER TABLE ventas MODIFY COLUMN metodo_pago ENUM('EFECTIVO', 'TARJETA', 'QR') NOT NULL");
-        DB::statement("ALTER TABLE compras MODIFY COLUMN metodo_pago ENUM('EFECTIVO', 'TARJETA', 'QR') NOT NULL");
+        DB::statement("ALTER TABLE ventas MODIFY COLUMN metodo_pago ENUM('EFECTIVO', 'QR') NOT NULL");
+        DB::statement("ALTER TABLE compras MODIFY COLUMN metodo_pago ENUM('EFECTIVO', 'QR') NOT NULL");
     }
 
     /**
@@ -20,7 +20,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement("ALTER TABLE ventas MODIFY COLUMN metodo_pago ENUM('EFECTIVO', 'TARJETA') NOT NULL");
-        DB::statement("ALTER TABLE compras MODIFY COLUMN metodo_pago ENUM('EFECTIVO', 'TARJETA') NOT NULL");
+        DB::statement("ALTER TABLE ventas MODIFY COLUMN metodo_pago ENUM('EFECTIVO', 'QR') NOT NULL");
+        DB::statement("ALTER TABLE compras MODIFY COLUMN metodo_pago ENUM('EFECTIVO', 'QR') NOT NULL");
     }
 };

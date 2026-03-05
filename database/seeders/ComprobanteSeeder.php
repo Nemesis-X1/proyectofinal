@@ -13,7 +13,7 @@ class ComprobanteSeeder extends Seeder
      */
     public function run(): void
     {
-        $comprobantes = ['Boleta', 'Factura'];
+        $comprobantes = ['Boleta'];
         foreach ($comprobantes as $comp) {
             Comprobante::firstOrCreate(['nombre' => $comp]);
         }

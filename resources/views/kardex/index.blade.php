@@ -60,9 +60,8 @@
                         <th>Descripción </th>
                         <th>Entrada</th>
                         <th>Salida</th>
-                        <th>Saldo</th>
+                        <th>Stock</th>
                         <th>Costo unitario</th>
-                        <th>Costo total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -88,9 +87,6 @@
                         </td>
                         <td>
                             {{$item->costo_unitario}}
-                        </td>
-                        <td>
-                            {{$item->costo_total}}
                         </td>
                     </tr>
                     @endforeach
