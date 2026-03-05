@@ -16,22 +16,58 @@ class homeController extends Controller
             return redirect()->route('login.index');
         }
 
+        $filter = request('filter', 'week');
+        $fechaInicio = null;
+        $fechaFin = Carbon::now();
+
+        switch ($filter) {
+            case 'day':
+                $fechaInicio = Carbon::today();
+                break;
+            case 'month':
+                $fechaInicio = Carbon::now()->startOfMonth();
+                break;
+            case 'custom':
+                $fechaInicio = request('fecha_inicio') ? Carbon::parse(request('fecha_inicio')) : Carbon::now()->subDays(7);
+                $fechaFin = request('fecha_fin') ? Carbon::parse(request('fecha_fin'))->endOfDay() : Carbon::now();
+                break;
+            case 'week':
+            default:
+                $fechaInicio = Carbon::now()->subDays(7);
+                break;
+        }
+
         $totalVentasPorDia = DB::table('ventas')
             ->selectRaw('DATE(fecha_hora) as fecha, SUM(total) as total')
-            ->where('fecha_hora', '>=', Carbon::now()->subDays(7))
+            ->whereBetween('fecha_hora', [$fechaInicio, $fechaFin])
             ->groupBy(DB::raw('DATE(fecha_hora)'))
             ->orderBy('fecha', 'asc')
             ->get()->toArray();
 
-        $productosStockBajo = DB::table('productos')
-            ->join('inventario', 'productos.id', '=', 'inventario.producto_id')
-            ->whereColumn('inventario.cantidad', '<=', 'inventario.stock_minimo')
-            ->orderBy('inventario.cantidad', 'asc')
-            ->select('productos.nombre', 'inventario.cantidad', 'inventario.stock_minimo')
-            ->limit(10)
+        // Top 5 productos más vendidos
+        $masVendidos = DB::table('producto_venta')
+            ->join('ventas', 'producto_venta.venta_id', '=', 'ventas.id')
+            ->join('productos', 'producto_venta.producto_id', '=', 'productos.id')
+            ->whereBetween('ventas.fecha_hora', [$fechaInicio, $fechaFin])
+            ->selectRaw('productos.nombre, SUM(producto_venta.cantidad) as total_vendido, SUM(producto_venta.cantidad * producto_venta.precio_venta) as total_bs')
+            ->groupBy('productos.id', 'productos.nombre')
+            ->orderByDesc('total_vendido')
+            ->limit(5)
             ->get();
 
+        // Top 5 productos menos vendidos (que tienen al menos 1 venta)
+        $menosVendidos = DB::table('producto_venta')
+            ->join('ventas', 'producto_venta.venta_id', '=', 'ventas.id')
+            ->join('productos', 'producto_venta.producto_id', '=', 'productos.id')
+            ->whereBetween('ventas.fecha_hora', [$fechaInicio, $fechaFin])
+            ->selectRaw('productos.nombre, SUM(producto_venta.cantidad) as total_vendido, SUM(producto_venta.cantidad * producto_venta.precio_venta) as total_bs')
+            ->groupBy('productos.id', 'productos.nombre')
+            ->orderBy('total_vendido', 'asc')
+            ->limit(5)
+            ->get();
 
-        return view('panel.index', compact('totalVentasPorDia','productosStockBajo'));
+        $moneda = \App\Models\Empresa::with('moneda')->first()->moneda->simbolo ?? 'Bs.';
+
+        return view('panel.index', compact('totalVentasPorDia', 'masVendidos', 'menosVendidos', 'moneda'));
     }
 }

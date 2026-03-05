@@ -14,6 +14,13 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/dashboard-custom.css') }}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script>
+        // Script preventivo para evitar parpadeo de tema claro
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     @stack('css')
 </head>
 

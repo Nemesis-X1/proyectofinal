@@ -7,42 +7,33 @@ $empresa = Empresa::first();
 <nav class="sb-topnav navbar navbar-expand navbar-dark">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="{{ route('panel') }}">{{$empresa->nombre ?? ''}}</a>
-    <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-    <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input name="search" class="form-control border-0 bg-light" type="text" placeholder="Buscar ...." aria-label="Search for..." aria-describedby="btnNavbarSearch" style="border-radius: 20px 0 0 20px; box-shadow: none;" />
-            <button class="btn bg-light border-0" id="btnNavbarSearch" type="button" style="border-radius: 0 20px 20px 0; color: #999;"><i class="fas fa-search"></i></button>
-        </div>
-    </form>
-    <div class="d-flex ms-auto align-items-center" style="margin-right: 2rem;">
-        <!-- Notificaciones -->
-        <div class="nav-item dropdown me-3">
-            <a class="nav-link" href="#" role="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: #666;">
-                <i class="fas fa-bell"></i>
-                <span class="badge bg-danger rounded-pill" style="font-size: 0.6em; position: absolute; top: 10px; right: 10px;">{{ Auth::user()->unreadNotifications->count() }}</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown" style="min-width: 300px;">
-                @forelse (Auth::user()->unreadNotifications->take(5) as $notification)
-                <li>
-                    <a href="#" class="dropdown-item">
-                        {{ $notification->data['message'] ?? 'Nueva notificación' }}
-                        <br>
-                        <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
-                    </a>
-                </li>
-                @empty
-                <li><span class="dropdown-item text-muted">Sin notificaciones nuevas</span></li>
-                @endforelse
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-center" href="#">Ver todas</a></li>
-            </ul>
+    <!-- Sidebar Toggle (Hamburguesa) -->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-3" id="sidebarToggle" href="#!"
+        style="color: #3c4858; font-size: 1.1rem; padding: 6px 10px; border-radius: 8px; transition: all 0.3s;"
+        title="Ocultar/Mostrar menú">
+        <i class="fas fa-bars" style="transition: transform 0.3s ease;"></i>
+    </button>
+    
+    <!-- Ms-auto para empujar los elementos a la derecha -->
+    <div class="ms-auto d-flex align-items-center" style="margin-right: 2rem;">
+        
+        <!-- Modo Oscuro Premium Pill -->
+        <div class="theme-switch-wrapper me-3">
+            <div class="theme-switch-container" id="theme-pill-toggle">
+                <div class="theme-switch-content">
+                    <span class="theme-switch-text text-day">MODO DÍA</span>
+                    <span class="theme-switch-text text-night">MODO NOCHE</span>
+                </div>
+                <div class="theme-switch-knob">
+                    <i class="fas fa-sun icon-sun"></i>
+                    <i class="fas fa-moon icon-moon"></i>
+                </div>
+            </div>
         </div>
 
         <!-- Usuario -->
         <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #666;">
                 <i class="fas fa-user fa-fw"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -58,3 +49,21 @@ $empresa = Empresa::first();
         </div>
     </div>
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.getElementById('theme-pill-toggle');
+        
+        // Cargar estado inicial
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        themeToggle.addEventListener('click', function() {
+            let activeTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    });
+</script>

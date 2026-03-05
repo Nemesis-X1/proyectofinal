@@ -5,14 +5,40 @@
 @push('css')
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    /* Asegurar que el contenedor del gráfico tenga altura */
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+</style>
 @endpush
 
 @section('content')
 <div class="container-fluid px-4">
-    <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 mt-4">
         <div>
             <h2 class="fw-bold text-dark mb-0">Dashboard</h2>
             <p class="text-muted small">Resumen general del sistema</p>
+        </div>
+        <div class="d-flex align-items-center gap-2 mt-3 mt-md-0">
+            <form action="{{ route('panel') }}" method="GET" id="filterForm" class="d-flex align-items-center gap-2">
+                <select name="filter" class="form-select form-select-sm border-0 shadow-sm" style="border-radius: 10px; width: 140px;" onchange="this.value === 'custom' ? document.getElementById('customDates').classList.remove('d-none') : this.form.submit()">
+                    <option value="day" {{ request('filter') == 'day' ? 'selected' : '' }}>Hoy</option>
+                    <option value="week" {{ request('filter') == 'week' || !request('filter') ? 'selected' : '' }}>Esta Semana</option>
+                    <option value="month" {{ request('filter') == 'month' ? 'selected' : '' }}>Este Mes</option>
+                    <option value="custom" {{ request('filter') == 'custom' ? 'selected' : '' }}>Personalizado</option>
+                </select>
+                
+                <div id="customDates" class="d-flex align-items-center gap-2 {{ request('filter') == 'custom' ? '' : 'd-none' }}">
+                    <input type="date" name="fecha_inicio" class="form-control form-control-sm border-0 shadow-sm" style="border-radius: 10px;" value="{{ request('fecha_inicio') }}">
+                    <input type="date" name="fecha_fin" class="form-control form-control-sm border-0 shadow-sm" style="border-radius: 10px;" value="{{ request('fecha_fin') }}">
+                    <button type="submit" class="btn btn-sm btn-primary border-0 shadow-sm" style="border-radius: 10px; background: #26dcda;">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -33,7 +59,7 @@
                     </h3>
                 </div>
                 <div class="dash-card-footer">
-                    <i class="fas fa-tag"></i> <a href="{{ route('clientes.index') }}" class="text-decoration-none text-muted">Gestionar clientes</a>
+                    <i class="fas fa-sync-alt"></i> Actualizado ahora
                 </div>
             </div>
         </div>
@@ -54,7 +80,7 @@
                     </h3>
                 </div>
                 <div class="dash-card-footer">
-                    <i class="fas fa-calendar"></i> <a href="{{ route('compras.index') }}" class="text-decoration-none text-muted">Ver historial</a>
+                    <i class="far fa-calendar-alt"></i> Últimas 24 horas
                 </div>
             </div>
         </div>
@@ -75,7 +101,7 @@
                     </h3>
                 </div>
                 <div class="dash-card-footer">
-                    <i class="fas fa-box"></i> <a href="{{ route('productos.index') }}" class="text-decoration-none text-muted">Inventario total</a>
+                    <i class="fas fa-history"></i> Justo ahora
                 </div>
             </div>
         </div>
@@ -85,18 +111,9 @@
             <div class="dash-card">
                 <div class="dash-card-icon bg-red">
                     <i class="fa-solid fa-user"></i>
-                </div>
-                <div class="dash-card-content">
-                    <p class="dash-card-category">Usuarios</p>
-                    <h3 class="dash-card-title">
-                        <?php
-                        use App\Models\User;
-                        echo count(User::all());
-                        ?>
-                    </h3>
-                </div>
+<<<<<<< HEAD
                 <div class="dash-card-footer">
-                    <i class="fas fa-clock"></i> <a href="{{ route('users.index') }}" class="text-decoration-none text-muted">Control de acceso</a>
+                    <i class="fas fa-user-shield"></i> Control activo
                 </div>
             </div>
         </div>
@@ -107,30 +124,61 @@
         <div class="col-lg-8">
             <div class="chart-card">
                 <div class="chart-card-header">
-                    <h5 class="chart-card-title text-success"><i class="fas fa-chart-line me-2"></i> Rendimiento de Ventas</h5>
+                    <h5 class="chart-card-title">Rendimiento de Ventas</h5>
                     <p class="text-muted small mb-0">Ventas en los últimos 7 días</p>
                 </div>
-                <div class="chart-body">
-                    <canvas id="ventasChart" width="100%" height="45"></canvas>
+                <div class="chart-container">
+                    <canvas id="ventasChart"></canvas>
                 </div>
-                <div class="dash-card-footer">
-                    <i class="fas fa-history"></i> Actualizado recientemente
+                <div class="chart-legend mt-3">
+                    <div class="legend-item"><span class="legend-dot" style="background: #26c6da;"></span> Ventas Actuales</div>
                 </div>
             </div>
         </div>
 
-        <!-- Gráfico de Stock -->
+
+        <!-- Lista de Productos Más/Menos Vendidos -->
         <div class="col-lg-4">
-            <div class="chart-card">
-                <div class="chart-card-header">
-                    <h5 class="chart-card-title text-warning"><i class="fas fa-exclamation-triangle me-2"></i> Alerta de Stock</h5>
-                    <p class="text-muted small mb-0">Productos con stock bajo</p>
+            <div class="chart-card h-100">
+                <!-- Botones tipo pill para alternar -->
+                <div class="d-flex mb-3" style="background:#f1f3f4; border-radius:30px; padding:4px; gap:4px;">
+                    <button id="btn-mas" onclick="toggleLista('mas')"
+                        style="flex:1; border:none; border-radius:26px; padding:7px 0; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; cursor:pointer; transition: all .3s; background:#3c4858; color:#fff; box-shadow:0 2px 5px rgba(0,0,0,.2);">
+                        + Vendidos
+                    </button>
+                    <button id="btn-menos" onclick="toggleLista('menos')"
+                        style="flex:1; border:none; border-radius:26px; padding:7px 0; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; cursor:pointer; transition: all .3s; background:transparent; color:#666;">
+                        - Vendidos
+                    </button>
                 </div>
-                <div class="chart-body">
-                    <canvas id="productosChart" width="100%" height="100"></canvas>
+
+                <div id="lista-mas">
+                    @forelse($masVendidos as $i => $p)
+                    <div class="d-flex align-items-center justify-content-between py-2" style="border-bottom: 1px solid var(--border-color);">
+                        <div class="d-flex align-items-center gap-3">
+                            <span style="width:26px;height:26px;border-radius:50%;background:{{ ['#26c6da','#66bb6a','#ffa726','#ab47bc','#ef5350'][$i] }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;">{{ $i+1 }}</span>
+                            <span style="font-size:13px;color:var(--text-main);">{{ $p->nombre }}</span>
+                        </div>
+                        <div style="font-size:13px;font-weight:700;color:#26c6da;">{{ $moneda }} {{ number_format($p->total_bs, 2) }}</div>
+                    </div>
+                    @empty
+                    <p class="text-muted small text-center mt-3">Sin datos en este período</p>
+                    @endforelse
                 </div>
-                <div class="dash-card-footer">
-                    <i class="fas fa-sync"></i> Revisión automática
+
+                <!-- Lista: Menos Vendidos -->
+                <div id="lista-menos" style="display:none;">
+                    @forelse($menosVendidos as $i => $p)
+                    <div class="d-flex align-items-center justify-content-between py-2" style="border-bottom: 1px solid var(--border-color);">
+                        <div class="d-flex align-items-center gap-3">
+                            <span style="width:26px;height:26px;border-radius:50%;background:{{ ['#ef5350','#ffa726','#26c6da','#66bb6a','#ab47bc'][$i] }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;">{{ $i+1 }}</span>
+                            <span style="font-size:13px;color:var(--text-main);">{{ $p->nombre }}</span>
+                        </div>
+                        <div style="font-size:13px;font-weight:700;color:#ef5350;">{{ $moneda }} {{ number_format($p->total_bs, 2) }}</div>
+                    </div>
+                    @empty
+                    <p class="text-muted small text-center mt-3">Sin datos en este período</p>
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -140,110 +188,89 @@
 @endsection
 
 @push('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<!-- Usar Chart.js v3 para mejor soporte de temas y opciones -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
 
 <script>
-    let datosVenta = @json($totalVentasPorDia);
+    document.addEventListener('DOMContentLoaded', function() {
+        // Colores dinámicos basados en el tema
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const textColor = isDark ? '#eee' : '#333';
+        const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
 
-    const fechas = datosVenta.map(venta => {
-        if (!venta.fecha) return 'Sin fecha';
-        const partes = venta.fecha.split('-');
-        if (partes.length < 3) return venta.fecha;
-        const [year, month, day] = partes;
-        return `${day}/${month}/${year}`;
-    });
-    const montos = datosVenta.map(venta => parseFloat(venta.total) || 0);
+        // Datos de Ventas
+        let datosVenta = @json($totalVentasPorDia);
+        const fechas = datosVenta.map(venta => {
+            if (!venta.fecha) return 'Sin fecha';
+            const partes = venta.fecha.split('-');
+            return partes.length === 3 ? `${partes[2]}/${partes[1]}/${partes[0].substring(2)}` : venta.fecha;
+        });
+        const montos = datosVenta.map(venta => parseFloat(venta.total) || 0);
 
-    const ventasChart = document.getElementById('ventasChart');
+        // Si no hay datos, mostrar algo simbólico para que el gráfico no esté vacío
+        const finalMontos = montos.length > 0 ? montos : [0, 0, 0, 0, 0, 0, 0];
+        const finalFechas = fechas.length > 0 ? fechas : ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
 
-    new Chart(ventasChart, {
-        type: 'line',
-        data: {
-            labels: fechas,
-            datasets: [{
-                label: "Ventas",
-                lineTension: 0.3,
-                backgroundColor: "rgba(102, 187, 106, 0.2)",
-                borderColor: "rgba(102, 187, 106, 1)",
-                pointRadius: 5,
-                pointBackgroundColor: "rgba(102, 187, 106, 1)",
-                pointBorderColor: "rgba(255,255,255,0.8)",
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(102, 187, 106, 1)",
-                pointHitRadius: 50,
-                pointBorderWidth: 2,
-                data: montos,
-            }],
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                    time: {
-                        unit: 'date'
-                    },
-                    gridLines: {
-                        display: false
-                    },
-                    ticks: {
-                        //maxTicksLimit: 7
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        //max: 40000,
-                        // maxTicksLimit: 5
-                    },
-                    gridLines: {
-                        color: "rgba(0, 0, 0, .05)",
-                    }
-                }],
-            },
-            legend: {
-                display: false
-            }
-        }
-    });
-
-
-    let datosProductos = @json($productosStockBajo);
-
-    const nombres = datosProductos.map(obj => obj.nombre);
-    const stock = datosProductos.map(i => i.cantidad);
-
-    const productosChart = document.getElementById('productosChart');
-
-    new Chart(productosChart, {
-        type: 'horizontalBar',
-        data: {
-            labels: nombres,
-            datasets: [{
-                label: 'stock',
-                backgroundColor: "rgba(255, 167, 38, 0.8)",
-                borderColor: "rgba(255, 167, 38, 1)",
-                data: stock,
-                borderWidth: 2,
-                hoverBorderColor: '#aaa',
-                base: 0
-            }]
-        },
-        options: {
-            legend: {
-                display: false
-            },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    gridLines: {
-                        display: false
-                    }
+        const ctxVentas = document.getElementById('ventasChart').getContext('2d');
+        new Chart(ctxVentas, {
+            type: 'bar',
+            data: {
+                labels: finalFechas,
+                datasets: [{
+                    label: "Ventas",
+                    data: finalMontos,
+                    backgroundColor: "#26c6da",
+                    borderRadius: 5,
+                    borderWidth: 0
                 }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: textColor }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: gridColor },
+                        ticks: { color: textColor }
+                    }
+                }
             }
-        }
+        });
     });
+
+    function toggleLista(tipo) {
+        const btnMas   = document.getElementById('btn-mas');
+        const btnMenos = document.getElementById('btn-menos');
+        const listaMas   = document.getElementById('lista-mas');
+        const listaMenos = document.getElementById('lista-menos');
+
+        if (tipo === 'mas') {
+            listaMas.style.display = 'block';
+            listaMenos.style.display = 'none';
+            btnMas.style.background = '#3c4858';
+            btnMas.style.color = '#fff';
+            btnMas.style.boxShadow = '0 2px 5px rgba(0,0,0,.2)';
+            btnMenos.style.background = 'transparent';
+            btnMenos.style.color = '#666';
+            btnMenos.style.boxShadow = 'none';
+        } else {
+            listaMenos.style.display = 'block';
+            listaMas.style.display = 'none';
+            btnMenos.style.background = '#3c4858';
+            btnMenos.style.color = '#fff';
+            btnMenos.style.boxShadow = '0 2px 5px rgba(0,0,0,.2)';
+            btnMas.style.background = 'transparent';
+            btnMas.style.color = '#666';
+            btnMas.style.boxShadow = 'none';
+        }
+    }
 </script>
 @endpush
