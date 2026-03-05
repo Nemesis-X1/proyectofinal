@@ -13,11 +13,7 @@ class PresentacioneSeeder extends Seeder
     public function run(): void
     {
         $presentaciones = [
-            ['nombre' => 'Caja', 'descripcion' => 'Caja de cartón', 'sigla' => 'CJ'],
-            ['nombre' => 'Frasco', 'descripcion' => 'Envase de vidrio o plástico', 'sigla' => 'FR'],
-            ['nombre' => 'Tableta', 'descripcion' => 'Blister de pastillas', 'sigla' => 'TB'],
-            ['nombre' => 'Tubo', 'descripcion' => 'Crema o gel', 'sigla' => 'TU'],
-            ['nombre' => 'Sobre', 'descripcion' => 'Polvo o granulado', 'sigla' => 'SB']
+            ['nombre' => 'Envase de Plástico', 'descripcion' => 'Envase de Plastico', 'sigla' => 'EP']
         ];
 
         foreach ($presentaciones as $item) {

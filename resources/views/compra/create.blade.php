@@ -199,7 +199,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td></td>
+                                            <td colspan="5"></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -208,7 +208,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="3">Sumas</th>
+                                            <th colspan="7">Sumas</th>
                                             <th colspan="2">
                                                 <input type="hidden" name="subtotal" value="0" id="inputSubtotal">
                                                 <span id="sumas">0</span>
@@ -216,7 +216,7 @@
                                             </th>
                                         </tr>
                                         <tr style="display: none;">
-                                            <th colspan="3">{{$empresa->abreviatura_impuesto}} %</th>
+                                            <th colspan="6">{{$empresa->abreviatura_impuesto}} %</th>
                                             <th colspan="2">
                                                 <input type="hidden" name="impuesto" value="0" id="inputImpuesto">
                                                 <span id="igv">0</span>
@@ -224,7 +224,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3">Total</th>
+                                            <th colspan="7">Total</th>
                                             <th colspan="2">
                                                 <input type="hidden" name="total" value="0" id="inputTotal">
                                                 <span id="total">0</span>

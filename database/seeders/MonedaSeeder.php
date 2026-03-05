@@ -15,12 +15,7 @@ class MonedaSeeder extends Seeder
     {
         $monedas = [
             ['iso' => 'USD', 'nombre' => 'Dólar estadounidense', 'simbolo' => '$'],
-            ['iso' => 'EUR', 'nombre' => 'Euro', 'simbolo' => '€'],
-            ['iso' => 'MXN', 'nombre' => 'Peso mexicano', 'simbolo' => '$'],
-            ['iso' => 'PEN', 'nombre' => 'Sol peruano', 'simbolo' => 'S/'],
-            ['iso' => 'ARS', 'nombre' => 'Peso Argentino', 'simbolo' => '$'],
-            ['iso' => 'CLP', 'nombre' => 'Peso Chileno', 'simbolo' => '$'],
-            ['iso' => 'BOB', 'nombre' => 'Boliviano', 'simbolo' => 'Bs.'],
+            ['iso' => 'BOB', 'nombre' => 'Boliviano', 'simbolo' => 'Bs.']
         ];
 
         foreach ($monedas as $moneda) {

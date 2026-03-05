@@ -14,25 +14,11 @@ class ClienteSeeder extends Seeder
     {
         $clientes = [
             [
-                'razon_social' => 'Juan Pérez',
-                'direccion' => 'Calle 10 # 5-20',
+                'razon_social' => 'Cliente Predeterminado',
+                'direccion' => 'Villa 1ro de Mayo',
                 'tipo_documento_id' => 1,
-                'numero_documento' => '10203040',
+                'numero_documento' => '123456',
                 'tipo_persona' => \App\Enums\TipoPersonaEnum::Natural
-            ],
-            [
-                'razon_social' => 'Maria López',
-                'direccion' => 'Av. Principal # 50',
-                'tipo_documento_id' => 1,
-                'numero_documento' => '50607080',
-                'tipo_persona' => \App\Enums\TipoPersonaEnum::Natural
-            ],
-            [
-                'razon_social' => 'Farmacia Central S.A.',
-                'direccion' => 'Centro Comercial Gran Plaza',
-                'tipo_documento_id' => 1,
-                'numero_documento' => '900100200',
-                'tipo_persona' => \App\Enums\TipoPersonaEnum::Juridica
             ]
         ];
 

@@ -149,15 +149,6 @@
                                 <small class="text-danger">{{'*'.$message}}</small>
                                 @enderror
                             </div>
-
-                            <div class="col-12">
-                                <label for="estado" class="form-label">Estado:</label>
-                                <div class="form-check form-switch">
-                                    <input type="hidden" name="estado" value="0">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="estado" name="estado" value="1" {{ old('estado', '1') == '1' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="estado">Activo (Visible para ventas)</label>
-                                </div>
-                            </div>
                         </div>
                     </div>
 

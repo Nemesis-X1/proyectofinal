@@ -51,7 +51,7 @@ class Kardex extends Model
             ->latest('id')
             ->first();
 
-        $saldo = $ultimoRegistro ? $ultimoRegistro->saldo : $data['cantidad'];
+        $saldo = $ultimoRegistro ? $ultimoRegistro->saldo : 0;
 
         if ($tipo == TipoTransaccionEnum::Compra || 
             $tipo == TipoTransaccionEnum::AjustePositivo || 

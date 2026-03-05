@@ -36,7 +36,7 @@ class CreateRegistroVentaKardexListener
                 'venta_id' => $event->venta->id,
                 'producto_id' => $event->producto_id,
                 'cantidad' => $event->cantidad,
-                'costo_unitario' => $costoUnitario
+                'costo_unitario' => $event->precio_venta
             ],
             TipoTransaccionEnum::Venta
         );

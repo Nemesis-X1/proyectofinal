@@ -16,13 +16,13 @@ class EmpresaSeeder extends Seeder
         $moneda = \App\Models\Moneda::where('estandar_iso', 'BOB')->first();
 
         Empresa::updateOrCreate(
-            ['ruc' => '1089674538'],
+            ['ruc' => '123456789'],
             [
-                'nombre' => 'SK SAC',
-                'propietario' => 'Sak Code',
+                'nombre' => 'KRALICENTER',
+                'propietario' => 'Marcelo Guzman Beltran',
                 'porcentaje_impuesto' => '0',
-                'abreviatura_impuesto' => 'IGV',
-                'direccion' => 'Av. Los Pinos n°789',
+                'abreviatura_impuesto' => 'N/A',
+                'direccion' => 'Villa 1ro de Mayo',
                 'moneda_id' => $moneda->id ?? 1
             ]
         );

@@ -13,11 +13,7 @@ class MarcaSeeder extends Seeder
     public function run(): void
     {
         $marcas = [
-            ['nombre' => 'Bayer', 'descripcion' => 'Laboratorio internacional'],
-            ['nombre' => 'Pfizer', 'descripcion' => 'Laboratorio internacional'],
-            ['nombre' => 'Genfar', 'descripcion' => 'Medicamentos genéricos'],
-            ['nombre' => 'Colgate', 'descripcion' => 'Cuidado bucal'],
-            ['nombre' => 'Johnson & Johnson', 'descripcion' => 'Cuidado infantil y personal']
+            ['nombre' => 'Fenzza', 'descripcion' => 'Cosméticos de calidad brasileros.']
         ];
 
         foreach ($marcas as $item) {

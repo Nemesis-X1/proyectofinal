@@ -12,7 +12,7 @@ class DocumentoSeeder extends Seeder
      */
     public function run(): void
     {
-        $documentos = ['DNI', 'Pasaporte', 'RUC', 'Carnet Extranjería'];
+        $documentos = ['CI'];
         foreach ($documentos as $doc) {
             Documento::firstOrCreate(['nombre' => $doc]);
         }

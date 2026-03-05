@@ -14,24 +14,10 @@ class ProveedorSeeder extends Seeder
     {
         $proveedores = [
             [
-                'razon_social' => 'Laboratorios Roche',
-                'direccion' => 'Zona Industrial Bloque A',
+                'razon_social' => 'Fenzza Bolivia',
+                'direccion' => 'Av. Mutualista #76',
                 'tipo_documento_id' => 1,
-                'numero_documento' => '800500100',
-                'tipo_persona' => \App\Enums\TipoPersonaEnum::Juridica
-            ],
-            [
-                'razon_social' => 'Droguería San Jorge',
-                'direccion' => 'Av. de las Américas 12-32',
-                'tipo_documento_id' => 1,
-                'numero_documento' => '700400200',
-                'tipo_persona' => \App\Enums\TipoPersonaEnum::Juridica
-            ],
-            [
-                'razon_social' => 'Insumos Médicos Express',
-                'direccion' => 'Calle 45 # 12-05',
-                'tipo_documento_id' => 1,
-                'numero_documento' => '600300400',
+                'numero_documento' => '567419874',
                 'tipo_persona' => \App\Enums\TipoPersonaEnum::Juridica
             ]
         ];

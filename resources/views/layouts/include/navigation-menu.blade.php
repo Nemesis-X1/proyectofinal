@@ -40,7 +40,6 @@
 
                     @can('crear-producto')
                     <x-nav.link-collapsed-item :href="route('productos.create')" content="Crear" />
-                    <x-nav.link-collapsed-item :href="route('productos.create', ['show_plano' => 1])" content="Plano de estantes" />
                     @endcan
                 </x-nav.link-collapsed>
                 @endcan
