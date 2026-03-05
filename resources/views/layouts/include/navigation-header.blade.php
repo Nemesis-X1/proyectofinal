@@ -4,24 +4,24 @@ use App\Models\Empresa;
 
 $empresa = Empresa::first();
 ?>
-<nav class="sb-topnav navbar navbar-expand navbar-dark" style="background-color: #861b2d;">
+<nav class="sb-topnav navbar navbar-expand navbar-dark">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="{{ route('panel') }}">{{$empresa->nombre ?? ''}}</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
-    <!--<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div class="input-group">
-            <input name="search" class="form-control" type="text" placeholder="Buscar ...." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+            <input name="search" class="form-control border-0 bg-light" type="text" placeholder="Buscar ...." aria-label="Search for..." aria-describedby="btnNavbarSearch" style="border-radius: 20px 0 0 20px; box-shadow: none;" />
+            <button class="btn bg-light border-0" id="btnNavbarSearch" type="button" style="border-radius: 0 20px 20px 0; color: #999;"><i class="fas fa-search"></i></button>
         </div>
-    </form>-->
+    </form>
     <div class="d-flex ms-auto align-items-center" style="margin-right: 2rem;">
         <!-- Notificaciones -->
         <div class="nav-item dropdown me-3">
-            <a class="nav-link dropdown-toggle" href="#" role="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link" href="#" role="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: #666;">
                 <i class="fas fa-bell"></i>
-                <span class="badge bg-danger rounded-pill">{{ Auth::user()->unreadNotifications->count() }}</span>
+                <span class="badge bg-danger rounded-pill" style="font-size: 0.6em; position: absolute; top: 10px; right: 10px;">{{ Auth::user()->unreadNotifications->count() }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown" style="min-width: 300px;">
                 @forelse (Auth::user()->unreadNotifications->take(5) as $notification)

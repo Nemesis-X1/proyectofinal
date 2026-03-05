@@ -9,137 +9,129 @@
 
 @section('content')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Panel</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Panel</li>
-    </ol>
+    <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-0">Dashboard</h2>
+            <p class="text-muted small">Resumen general del sistema</p>
+        </div>
+    </div>
+
     <div class="row">
         <!----Clientes--->
         <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-8">
-                            <i class="fa-solid fa-people-group"></i><span class="m-1">Clientes</span>
-                        </div>
-                        <div class="col-4">
-                            <?php
-
-                            use App\Models\Cliente;
-
-                            $clientes = count(Cliente::all());
-                            ?>
-                            <p class="text-center fw-bold fs-4">{{$clientes}}</p>
-                        </div>
-                    </div>
+            <div class="dash-card">
+                <div class="dash-card-icon bg-orange">
+                    <i class="fa-solid fa-people-group"></i>
                 </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('clientes.index') }}">Ver más</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                <div class="dash-card-content">
+                    <p class="dash-card-category">Clientes</p>
+                    <h3 class="dash-card-title">
+                        <?php
+                        use App\Models\Cliente;
+                        echo count(Cliente::all());
+                        ?>
+                    </h3>
+                </div>
+                <div class="dash-card-footer">
+                    <i class="fas fa-tag"></i> <a href="{{ route('clientes.index') }}" class="text-decoration-none text-muted">Gestionar clientes</a>
                 </div>
             </div>
         </div>
 
         <!----Compra--->
         <div class="col-xl-3 col-md-6">
-            <div class="card bg-secondary text-white mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-8">
-                            <i class="fa-solid fa-store"></i><span class="m-1">Compras</span>
-                        </div>
-                        <div class="col-4">
-                            <?php
-
-                            use App\Models\Compra;
-
-                            $compras = count(Compra::all());
-                            ?>
-                            <p class="text-center fw-bold fs-4">{{$compras}}</p>
-                        </div>
-                    </div>
+            <div class="dash-card">
+                <div class="dash-card-icon bg-green">
+                    <i class="fa-solid fa-store"></i>
                 </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('compras.index') }}">Ver más</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                <div class="dash-card-content">
+                    <p class="dash-card-category">Compras</p>
+                    <h3 class="dash-card-title">
+                        <?php
+                        use App\Models\Compra;
+                        echo count(Compra::all());
+                        ?>
+                    </h3>
+                </div>
+                <div class="dash-card-footer">
+                    <i class="fas fa-calendar"></i> <a href="{{ route('compras.index') }}" class="text-decoration-none text-muted">Ver historial</a>
                 </div>
             </div>
         </div>
 
         <!----Producto--->
         <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-8">
-                            <i class="fa-brands fa-shopify"></i><span class="m-1">Productos</span>
-                        </div>
-                        <div class="col-4">
-                            <?php
-
-                            use App\Models\Producto;
-
-                            $productos = count(Producto::all());
-                            ?>
-                            <p class="text-center fw-bold fs-4">{{$productos}}</p>
-                        </div>
-                    </div>
+            <div class="dash-card">
+                <div class="dash-card-icon bg-blue">
+                    <i class="fa-brands fa-shopify"></i>
                 </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('productos.index') }}">Ver más</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                <div class="dash-card-content">
+                    <p class="dash-card-category">Productos</p>
+                    <h3 class="dash-card-title">
+                        <?php
+                        use App\Models\Producto;
+                        echo count(Producto::all());
+                        ?>
+                    </h3>
+                </div>
+                <div class="dash-card-footer">
+                    <i class="fas fa-box"></i> <a href="{{ route('productos.index') }}" class="text-decoration-none text-muted">Inventario total</a>
                 </div>
             </div>
         </div>
 
         <!----Users--->
         <div class="col-xl-3 col-md-6">
-            <div class="card bg-info text-white mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-8">
-                            <i class="fa-solid fa-user"></i><span class="m-1">Usuarios</span>
-                        </div>
-                        <div class="col-4">
-                            <?php
-
-                            use App\Models\User;
-
-                            $users = count(User::all());
-                            ?>
-                            <p class="text-center fw-bold fs-4">{{$users}}</p>
-                        </div>
-                    </div>
+            <div class="dash-card">
+                <div class="dash-card-icon bg-red">
+                    <i class="fa-solid fa-user"></i>
                 </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="{{ route('users.index') }}">Ver más</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                <div class="dash-card-content">
+                    <p class="dash-card-category">Usuarios</p>
+                    <h3 class="dash-card-title">
+                        <?php
+                        use App\Models\User;
+                        echo count(User::all());
+                        ?>
+                    </h3>
                 </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-bar me-1"></i>
-                    Productos con Stock Bajo
+                <div class="dash-card-footer">
+                    <i class="fas fa-clock"></i> <a href="{{ route('users.index') }}" class="text-decoration-none text-muted">Control de acceso</a>
                 </div>
-                <div class="card-body"><canvas id="productosChart" width="100%" height="30"></canvas></div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-area me-1"></i>
-                    Ventas en los últimos 7 días
+    <div class="row mt-4">
+        <!-- Gráfico de Ventas -->
+        <div class="col-lg-8">
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h5 class="chart-card-title text-success"><i class="fas fa-chart-line me-2"></i> Rendimiento de Ventas</h5>
+                    <p class="text-muted small mb-0">Ventas en los últimos 7 días</p>
                 </div>
-                <div class="card-body"><canvas id="ventasChart" width="100%" height="30"></canvas></div>
+                <div class="chart-body">
+                    <canvas id="ventasChart" width="100%" height="45"></canvas>
+                </div>
+                <div class="dash-card-footer">
+                    <i class="fas fa-history"></i> Actualizado recientemente
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico de Stock -->
+        <div class="col-lg-4">
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h5 class="chart-card-title text-warning"><i class="fas fa-exclamation-triangle me-2"></i> Alerta de Stock</h5>
+                    <p class="text-muted small mb-0">Productos con stock bajo</p>
+                </div>
+                <div class="chart-body">
+                    <canvas id="productosChart" width="100%" height="100"></canvas>
+                </div>
+                <div class="dash-card-footer">
+                    <i class="fas fa-sync"></i> Revisión automática
+                </div>
             </div>
         </div>
     </div>
@@ -156,10 +148,13 @@
     let datosVenta = @json($totalVentasPorDia);
 
     const fechas = datosVenta.map(venta => {
-        const [year, month, day] = venta.fecha.split('-');
+        if (!venta.fecha) return 'Sin fecha';
+        const partes = venta.fecha.split('-');
+        if (partes.length < 3) return venta.fecha;
+        const [year, month, day] = partes;
         return `${day}/${month}/${year}`;
     });
-    const montos = datosVenta.map(venta => parseFloat(venta.total));
+    const montos = datosVenta.map(venta => parseFloat(venta.total) || 0);
 
     const ventasChart = document.getElementById('ventasChart');
 
@@ -170,13 +165,13 @@
             datasets: [{
                 label: "Ventas",
                 lineTension: 0.3,
-                backgroundColor: "rgba(2,117,216,0.2)",
-                borderColor: "rgba(2,117,216,1)",
+                backgroundColor: "rgba(102, 187, 106, 0.2)",
+                borderColor: "rgba(102, 187, 106, 1)",
                 pointRadius: 5,
-                pointBackgroundColor: "rgba(2,117,216,1)",
+                pointBackgroundColor: "rgba(102, 187, 106, 1)",
                 pointBorderColor: "rgba(255,255,255,0.8)",
                 pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                pointHoverBackgroundColor: "rgba(102, 187, 106, 1)",
                 pointHitRadius: 50,
                 pointBorderWidth: 2,
                 data: montos,
@@ -202,7 +197,7 @@
                         // maxTicksLimit: 5
                     },
                     gridLines: {
-                        color: "rgba(0, 0, 0, .125)",
+                        color: "rgba(0, 0, 0, .05)",
                     }
                 }],
             },
@@ -226,8 +221,8 @@
             labels: nombres,
             datasets: [{
                 label: 'stock',
-                backgroundColor: "rgba(2,117,216,1)",
-                borderColor: "#fff",
+                backgroundColor: "rgba(255, 167, 38, 0.8)",
+                borderColor: "rgba(255, 167, 38, 1)",
                 data: stock,
                 borderWidth: 2,
                 hoverBorderColor: '#aaa',
@@ -238,6 +233,16 @@
             legend: {
                 display: false
             },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            }
         }
     });
 </script>

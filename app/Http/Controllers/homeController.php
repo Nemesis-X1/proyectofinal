@@ -17,9 +17,9 @@ class homeController extends Controller
         }
 
         $totalVentasPorDia = DB::table('ventas')
-            ->selectRaw('DATE(created_at) as fecha, SUM(total) as total')
-            ->where('created_at', '>=', Carbon::now()->subDays(7))
-            ->groupBy(DB::raw('DATE(created_at)'))
+            ->selectRaw('DATE(fecha_hora) as fecha, SUM(total) as total')
+            ->where('fecha_hora', '>=', Carbon::now()->subDays(7))
+            ->groupBy(DB::raw('DATE(fecha_hora)'))
             ->orderBy('fecha', 'asc')
             ->get()->toArray();
 
