@@ -112,14 +112,31 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Comprobante PDF</h1>
+                <h1 class="modal-title fs-5"><i class="fa-solid fa-file-pdf me-2" style="color:#924ab0;"></i>Comprobante PDF</h1>
+                <div class="ms-auto d-flex gap-2 me-3">
+                    <a id="btnAbrirPDF" href="#" target="_blank" class="btn btn-sm btn-primary" title="Abrir en nueva pestaña">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir en pestaña
+                    </a>
+                    <a id="btnDescargarPDF" href="#" download class="btn btn-sm btn-secondary" title="Descargar PDF">
+                        <i class="fa-solid fa-download"></i> Descargar
+                    </a>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body p-0">
-                <iframe id="iframePDF" src="" style="width:100%; height:650px; border:0;"></iframe>
+            <div class="modal-body p-0" style="min-height:300px;">
+                {{-- Primero intentamos con embed (mejor soporte que iframe para PDFs) --}}
+                <embed id="embedPDF" src="" type="application/pdf" style="width:100%; height:650px;" class="w-100">
                 <div id="noPDFMessage" class="text-center d-none p-5">
                     <i class="fa-solid fa-file-circle-xmark fa-3x mb-3 text-muted"></i>
-                    <p class="text-muted">No se ha cargado un comprobante para esta compra.</p>
+                    <p class="text-muted mb-2">No se ha cargado un comprobante para esta compra.</p>
+                </div>
+                {{-- Fallback si el embed no funciona (ej. Firefox en modo estricto) --}}
+                <div id="pdfFallback" class="text-center d-none p-4">
+                    <i class="fa-solid fa-triangle-exclamation fa-2x mb-3 text-warning"></i>
+                    <p class="mb-3">Tu navegador no puede mostrar el PDF aquí. Puedes abrirlo directamente:</p>
+                    <a id="btnFallbackPDF" href="#" target="_blank" class="btn btn-primary">
+                        <i class="fa-solid fa-external-link-alt me-1"></i> Ver PDF
+                    </a>
                 </div>
             </div>
             <div class="modal-footer">
@@ -138,28 +155,53 @@
     document.addEventListener('DOMContentLoaded', function () {
         const modalElement = document.getElementById('modalPDFGlobal');
         const modal = new bootstrap.Modal(modalElement);
-        const iframe = document.getElementById('iframePDF');
+        const embedPDF = document.getElementById('embedPDF');
         const noPDFMessage = document.getElementById('noPDFMessage');
+        const pdfFallback = document.getElementById('pdfFallback');
+        const btnAbrir = document.getElementById('btnAbrirPDF');
+        const btnDescargar = document.getElementById('btnDescargarPDF');
+        const btnFallback = document.getElementById('btnFallbackPDF');
 
         document.querySelectorAll('.btn-ver-pdf').forEach(function(btn) {
             btn.addEventListener('click', function () {
                 const path = this.getAttribute('data-path');
+
+                // Ocultar todo primero
+                embedPDF.classList.add('d-none');
+                noPDFMessage.classList.add('d-none');
+                pdfFallback.classList.add('d-none');
+
                 if (path && path.trim() !== '') {
-                    iframe.src = path;
-                    iframe.classList.remove('d-none');
-                    noPDFMessage.classList.add('d-none');
+                    // Actualizar botones de cabecera
+                    btnAbrir.href = path;
+                    btnDescargar.href = path;
+                    btnFallback.href = path;
+
+                    // Intentar cargar el PDF con embed
+                    embedPDF.src = path;
+                    embedPDF.classList.remove('d-none');
+
+                    // Si después de 3 segundos el embed no muestra nada, mostrar fallback
+                    embedPDF.onerror = function() {
+                        embedPDF.classList.add('d-none');
+                        pdfFallback.classList.remove('d-none');
+                    };
                 } else {
-                    iframe.src = '';
-                    iframe.classList.add('d-none');
+                    btnAbrir.href = '#';
+                    btnDescargar.href = '#';
                     noPDFMessage.classList.remove('d-none');
                 }
+
                 modal.show();
             });
         });
 
-        // Liberar el iframe al cerrar el modal para no ocupar memoria
+        // Limpiar al cerrar el modal para liberar memoria
         modalElement.addEventListener('hidden.bs.modal', function () {
-            iframe.src = '';
+            embedPDF.src = '';
+            embedPDF.classList.remove('d-none');
+            noPDFMessage.classList.add('d-none');
+            pdfFallback.classList.add('d-none');
         });
     });
 </script>

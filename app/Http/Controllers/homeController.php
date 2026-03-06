@@ -68,6 +68,15 @@ class homeController extends Controller
 
         $moneda = \App\Models\Empresa::with('moneda')->first()->moneda->simbolo ?? 'Bs.';
 
-        return view('panel.index', compact('totalVentasPorDia', 'masVendidos', 'menosVendidos', 'moneda'));
+        // Productos con stock bajo: cantidad actual <= cantidad_minima (o 10 si no está definido)
+        $stockBajo = DB::table('inventario')
+            ->join('productos', 'inventario.producto_id', '=', 'productos.id')
+            ->whereRaw('inventario.cantidad <= COALESCE(inventario.cantidad_minima, 10)')
+            ->orderBy('inventario.cantidad', 'asc')
+            ->limit(10)
+            ->select('productos.nombre', 'inventario.cantidad', 'inventario.cantidad_minima')
+            ->get();
+
+        return view('panel.index', compact('totalVentasPorDia', 'masVendidos', 'menosVendidos', 'moneda', 'stockBajo'));
     }
 }

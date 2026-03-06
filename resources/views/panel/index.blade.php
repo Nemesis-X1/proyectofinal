@@ -159,6 +159,10 @@
                         style="flex:1; border:none; border-radius:26px; padding:7px 0; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; cursor:pointer; transition: all .3s; background:transparent; color:#666;">
                         - Vendidos
                     </button>
+                    <button id="btn-stock" onclick="toggleLista('stock')"
+                        style="flex:1; border:none; border-radius:26px; padding:7px 0; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; cursor:pointer; transition: all .3s; background:transparent; color:#666;">
+                        Stock bajo
+                    </button>
                 </div>
 
                 <div id="lista-mas">
@@ -187,6 +191,32 @@
                     </div>
                     @empty
                     <p class="text-muted small text-center mt-3">Sin datos en este período</p>
+                    @endforelse
+                </div>
+
+                <!-- Lista: Stock Bajo -->
+                <div id="lista-stock" style="display:none;">
+                    @forelse($stockBajo as $i => $p)
+                    @php $minimo = $p->cantidad_minima ?? 10; @endphp
+                    <div class="d-flex align-items-center justify-content-between py-2" style="border-bottom: 1px solid var(--border-color);">
+                        <div class="d-flex align-items-center gap-3">
+                            <span style="width:26px;height:26px;border-radius:50%;background:{{ $p->cantidad == 0 ? '#ef5350' : ($p->cantidad <= ($p->cantidad_minima ?? 10) / 2 ? '#ffa726' : '#ffd54f') }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;">
+                                <i class="fa-solid fa-triangle-exclamation" style="font-size:10px;"></i>
+                            </span>
+                            <div>
+                                <span style="font-size:13px;color:var(--text-main);">{{ $p->nombre }}</span>
+                                <span style="display:block;font-size:10px;color:var(--text-muted);">Mín: {{ $minimo }} uds.</span>
+                            </div>
+                        </div>
+                        <div style="font-size:13px;font-weight:700;color:{{ $p->cantidad == 0 ? '#ef5350' : ($p->cantidad <= ($p->cantidad_minima ?? 10) / 2 ? '#ffa726' : '#ffd54f') }};">
+                            {{ $p->cantidad }} uds.
+                        </div>
+                    </div>
+                    @empty
+                    <div class="text-center mt-4 py-3">
+                        <i class="fa-solid fa-circle-check fa-2x mb-2" style="color:#66bb6a;"></i>
+                        <p class="text-muted small mb-0">¡Todos los productos tienen stock suficiente!</p>
+                    </div>
                     @endforelse
                 </div>
             </div>
@@ -258,27 +288,38 @@
     function toggleLista(tipo) {
         const btnMas   = document.getElementById('btn-mas');
         const btnMenos = document.getElementById('btn-menos');
+        const btnStock = document.getElementById('btn-stock');
         const listaMas   = document.getElementById('lista-mas');
         const listaMenos = document.getElementById('lista-menos');
+        const listaStock = document.getElementById('lista-stock');
+
+        // Ocultar todo primero
+        listaMas.style.display = 'none';
+        listaMenos.style.display = 'none';
+        listaStock.style.display = 'none';
+
+        // Reset todos los botones
+        [btnMas, btnMenos, btnStock].forEach(btn => {
+            btn.style.background = 'transparent';
+            btn.style.color = '#8e87a2';
+            btn.style.boxShadow = 'none';
+        });
+
+        const activeStyle = {
+            background: 'linear-gradient(90deg, #642582, #8e44ad)',
+            color: '#fff',
+            boxShadow: '0 4px 10px rgba(100, 37, 130, 0.3)'
+        };
 
         if (tipo === 'mas') {
             listaMas.style.display = 'block';
-            listaMenos.style.display = 'none';
-            btnMas.style.background = 'linear-gradient(90deg, #642582, #8e44ad)';
-            btnMas.style.color = '#fff';
-            btnMas.style.boxShadow = '0 4px 10px rgba(100, 37, 130, 0.3)';
-            btnMenos.style.background = 'transparent';
-            btnMenos.style.color = '#8e87a2';
-            btnMenos.style.boxShadow = 'none';
-        } else {
+            Object.assign(btnMas.style, activeStyle);
+        } else if (tipo === 'menos') {
             listaMenos.style.display = 'block';
-            listaMas.style.display = 'none';
-            btnMenos.style.background = 'linear-gradient(90deg, #642582, #8e44ad)';
-            btnMenos.style.color = '#fff';
-            btnMenos.style.boxShadow = '0 4px 10px rgba(100, 37, 130, 0.3)';
-            btnMas.style.background = 'transparent';
-            btnMas.style.color = '#8e87a2';
-            btnMas.style.boxShadow = 'none';
+            Object.assign(btnMenos.style, activeStyle);
+        } else {
+            listaStock.style.display = 'block';
+            Object.assign(btnStock.style, activeStyle);
         }
     }
 </script>
