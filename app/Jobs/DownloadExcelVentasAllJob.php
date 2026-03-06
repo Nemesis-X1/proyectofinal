@@ -36,7 +36,7 @@ class DownloadExcelVentasAllJob implements ShouldQueue
             Excel::store(new VentasExport, 'reportesExcelVentas/' . $this->filename, 'public');
 
             $user = User::findOrfail($this->user_id);
-            Notification::send($user, new ExcelVentasDescargado());
+            Notification::send($user, new ExcelVentasDescargado($this->filename));
         } catch (\Throwable $e) {
             Log::error("Error al exportar ventas a Excel: " . $e->getMessage());
         }

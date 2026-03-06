@@ -18,4 +18,17 @@ class ExportExcelController extends Controller
 
         return redirect()->route('ventas.index')->with('success', 'Procesando descarga');
     }
+
+    /**
+     * Descargar el archivo EXCEL de ventas
+     */
+    public function downloadExcelVentas(string $filename)
+    {
+        $path = 'reportesExcelVentas/' . $filename;
+        if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+            abort(404);
+        }
+
+        return \Illuminate\Support\Facades\Storage::disk('public')->download($path);
+    }
 }

@@ -9,14 +9,14 @@ use Illuminate\Notifications\Notification;
 
 class ExcelVentasDescargado extends Notification
 {
-    use Queueable;
+    protected string $filename;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(string $filename)
     {
-        //
+        $this->filename = $filename;
     }
 
     /**
@@ -30,17 +30,6 @@ class ExcelVentasDescargado extends Notification
     }
 
     /**
-     * Get the mail representation of the notification.
-     */
-  /*  public function toMail(object $notifiable): MailMessage
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
-    }*/
-
-    /**
      * Get the array representation of the notification.
      *
      * @return array<string, mixed>
@@ -48,7 +37,9 @@ class ExcelVentasDescargado extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'Aviso: Se decargo el reporte de ventas'
+            'message' => 'Reporte de ventas listo para descargar',
+            'url' => route('export.excel-ventas-download', ['filename' => $this->filename]),
+            'icon' => 'fa-file-excel'
         ];
     }
 }

@@ -171,7 +171,7 @@
 <body>
     <div class="login-card">
         <div class="logo-container">
-            <i class="fas fa-shopping-cart"></i>
+            <img src="{{ asset('logo.jpg') }}" alt="Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 20px;">
         </div>
 
         <h1 class="login-title">PUNTO DE VENTA</h1>
