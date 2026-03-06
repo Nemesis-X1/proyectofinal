@@ -24,10 +24,10 @@
     <div class="container-lg mt-4">
         <div class="row gy-4">
             <div class="col-12">
-                <div class="text-white bg-success p-1 text-center">
+                <div class="text-white p-1 text-center" style="background-color: #924ab0 !important;">
                     Datos generales
                 </div>
-                <div class="p-3 border border-3 border-success">
+                <div class="p-3 border border-3" style="border-color: #924ab0 !important;">
                     <div class="row g-4">
                         <div class="col-12">
                             <label for="proveedore_id" class="form-label">
@@ -122,10 +122,10 @@
             </div>
 
             <div class="col-12">
-                <div class="text-white bg-primary p-1 text-center">
+                <div class="text-white p-1 text-center" style="background-color: #924ab0 !important;">
                     Detalles de la compra
                 </div>
-                <div class="p-3 border border-3 border-primary">
+                <div class="p-3 border border-3" style="border-color: #924ab0 !important;">
                     <div class="row g-4">
                         <div class="col-12">
                             <select id="producto_id"
@@ -184,7 +184,7 @@
                         <div class="col-12">
                             <div class="table-responsive">
                                 <table id="tabla_detalle" class="table table-hover">
-                                    <thead class="bg-primary">
+                                    <thead style="background-color: #924ab0 !important;">
                                         <tr>
                                             <th class="text-white">Producto</th>
                                             <th class="text-white">Presentacion</th>

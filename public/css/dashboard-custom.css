@@ -373,7 +373,7 @@ body {
 }
 
 /* Global Button Styles */
-.btn-primary, .btn-login, .btn-sm.btn-primary {
+.btn-primary, .btn-login, .btn-sm.btn-primary, .btn-success {
     background: linear-gradient(90deg, #642582, #8e44ad) !important;
     border: none !important;
     border-radius: 10px !important;
@@ -385,7 +385,7 @@ body {
     letter-spacing: 0.5px !important;
 }
 
-.btn-primary:hover, .btn-login:hover {
+.btn-primary:hover, .btn-login:hover, .btn-success:hover {
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 15px rgba(100, 37, 130, 0.3) !important;
     opacity: 0.9;

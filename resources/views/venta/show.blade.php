@@ -48,7 +48,7 @@
         </div>
         <div class="card-body table-responsive">
             <table class="table table-striped">
-                <thead class="bg-primary text-white">
+                <thead style="background-color: #924ab0 !important;" class="text-white">
                     <tr class="align-top">
                         <th class="text-white">Producto</th>
                         <th class="text-white">Presentación</th>
