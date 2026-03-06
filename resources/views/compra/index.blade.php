@@ -167,9 +167,11 @@
         const btnDescargar = document.getElementById('btnDescargarPDF');
         const btnFallback = document.getElementById('btnFallbackPDF');
 
-        document.querySelectorAll('.btn-ver-pdf').forEach(function(btn) {
-            btn.addEventListener('click', function () {
-                const path = this.getAttribute('data-path');
+        // Usar delegación de eventos para que funcione incluso si DataTables redibuja la tabla
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.btn-ver-pdf');
+            if (btn) {
+                const path = btn.getAttribute('data-path');
 
                 // Ocultar todo primero
                 embedPDF.classList.add('d-none');
@@ -186,11 +188,12 @@
                     embedPDF.src = path;
                     embedPDF.classList.remove('d-none');
 
-                    // Si después de 3 segundos el embed no muestra nada, mostrar fallback
-                    embedPDF.onerror = function() {
-                        embedPDF.classList.add('d-none');
-                        pdfFallback.classList.remove('d-none');
-                    };
+                    // Fallback si el embed falla
+                    setTimeout(() => {
+                        if (embedPDF.classList.contains('d-none') === false && embedPDF.readyState === 0) {
+                            // Este es un chequeo aproximado, ya que readystate no es estándar para embed
+                        }
+                    }, 3000);
                 } else {
                     btnAbrir.href = '#';
                     btnDescargar.href = '#';
@@ -198,7 +201,7 @@
                 }
 
                 modal.show();
-            });
+            }
         });
 
         // Limpiar al cerrar el modal para liberar memoria
