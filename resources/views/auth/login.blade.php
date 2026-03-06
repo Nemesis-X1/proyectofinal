@@ -174,8 +174,8 @@
             <img src="{{ asset('logo.jpg') }}" alt="Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 20px;">
         </div>
 
-        <h1 class="login-title">PUNTO DE VENTA</h1>
-        <p class="login-subtitle">INICIO DE SESIÓN</p>
+        <h1 class="login-title">INICIO DE SESIÓN</h1>
+        <p class="login-subtitle"> </p>
 
         @if ($errors->any())
             <div class="alert-custom">
@@ -200,10 +200,6 @@
                 <input name="password" value="admin" id="inputPassword" type="password" placeholder="********" required />
             </div>
 
-            <label class="remember-me">
-                <input type="checkbox" name="remember" id="remember">
-                Mantener sesión iniciada
-            </label>
 
             <button class="btn-login" type="submit">
                 <i class="fas fa-sign-in-alt"></i>
