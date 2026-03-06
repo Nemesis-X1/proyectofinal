@@ -19,7 +19,7 @@
 <div class="container-fluid px-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 mt-4">
         <div>
-            <h2 class="fw-bold text-dark mb-0">Dashboard</h2>
+            <h2 class="fw-bold mb-0">Dashboard</h2>
             <p class="text-muted small">Resumen general del sistema</p>
         </div>
         <div class="d-flex align-items-center gap-2 mt-3 mt-md-0">
@@ -34,7 +34,7 @@
                 <div id="customDates" class="d-flex align-items-center gap-2 {{ request('filter') == 'custom' ? '' : 'd-none' }}">
                     <input type="date" name="fecha_inicio" class="form-control form-control-sm border-0 shadow-sm" style="border-radius: 10px;" value="{{ request('fecha_inicio') }}">
                     <input type="date" name="fecha_fin" class="form-control form-control-sm border-0 shadow-sm" style="border-radius: 10px;" value="{{ request('fecha_fin') }}">
-                    <button type="submit" class="btn btn-sm btn-primary border-0 shadow-sm" style="border-radius: 10px; background: #26dcda;">
+                    <button type="submit" class="btn btn-sm btn-primary">
                         <i class="fas fa-filter"></i>
                     </button>
                 </div>
@@ -47,7 +47,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="dash-card">
                 <div class="dash-card-icon bg-orange">
-                    <i class="fa-solid fa-people-group"></i>
+                    <i class="fa-solid fa-people-group" style="color: white !important;"></i>
                 </div>
                 <div class="dash-card-content">
                     <p class="dash-card-category">Clientes</p>
@@ -68,7 +68,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="dash-card">
                 <div class="dash-card-icon bg-green">
-                    <i class="fa-solid fa-store"></i>
+                    <i class="fa-solid fa-store" style="color: white !important;"></i>
                 </div>
                 <div class="dash-card-content">
                     <p class="dash-card-category">Compras</p>
@@ -89,7 +89,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="dash-card">
                 <div class="dash-card-icon bg-blue">
-                    <i class="fa-brands fa-shopify"></i>
+                    <i class="fa-solid fa-boxes-stacked" style="color: white !important;"></i>
                 </div>
                 <div class="dash-card-content">
                     <p class="dash-card-category">Productos</p>
@@ -110,7 +110,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="dash-card">
                 <div class="dash-card-icon bg-red">
-                    <i class="fa-solid fa-user"></i>
+                    <i class="fa-solid fa-user" style="color: white !important;"></i>
                 </div>
                 <div class="dash-card-content">
                     <p class="dash-card-category">Usuarios</p>
@@ -140,7 +140,7 @@
                     <canvas id="ventasChart"></canvas>
                 </div>
                 <div class="chart-legend mt-3">
-                    <div class="legend-item"><span class="legend-dot" style="background: #26c6da;"></span> Ventas Actuales</div>
+                    <div class="legend-item"><span class="legend-dot" style="background: #924ab0;"></span> Ventas Actuales</div>
                 </div>
             </div>
         </div>
@@ -165,10 +165,10 @@
                     @forelse($masVendidos as $i => $p)
                     <div class="d-flex align-items-center justify-content-between py-2" style="border-bottom: 1px solid var(--border-color);">
                         <div class="d-flex align-items-center gap-3">
-                            <span style="width:26px;height:26px;border-radius:50%;background:{{ ['#26c6da','#66bb6a','#ffa726','#ab47bc','#ef5350'][$i] }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;">{{ $i+1 }}</span>
+                            <span style="width:26px;height:26px;border-radius:50%;background:{{ ['#642582','#8e44ad','#9b59b6','#ab47bc','#da70d6'][$i] }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;">{{ $i+1 }}</span>
                             <span style="font-size:13px;color:var(--text-main);">{{ $p->nombre }}</span>
                         </div>
-                        <div style="font-size:13px;font-weight:700;color:#26c6da;">{{ $moneda }} {{ number_format($p->total_bs, 2) }}</div>
+                        <div style="font-size:13px;font-weight:700;color:#924ab0;">{{ $moneda }} {{ number_format($p->total_bs, 2) }}</div>
                     </div>
                     @empty
                     <p class="text-muted small text-center mt-3">Sin datos en este período</p>
@@ -207,7 +207,7 @@
         // Colores dinámicos basados en el tema
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         const textColor = isDark ? '#eee' : '#333';
-        const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+        const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(100, 37, 130, 0.05)';
 
         // Datos de Ventas
         let datosVenta = @json($totalVentasPorDia);
@@ -230,8 +230,8 @@
                 datasets: [{
                     label: "Ventas",
                     data: finalMontos,
-                    backgroundColor: "#26c6da",
-                    borderRadius: 5,
+                    backgroundColor: "#924ab0",
+                    borderRadius: 8,
                     borderWidth: 0
                 }]
             },
@@ -264,20 +264,20 @@
         if (tipo === 'mas') {
             listaMas.style.display = 'block';
             listaMenos.style.display = 'none';
-            btnMas.style.background = '#3c4858';
+            btnMas.style.background = 'linear-gradient(90deg, #642582, #8e44ad)';
             btnMas.style.color = '#fff';
-            btnMas.style.boxShadow = '0 2px 5px rgba(0,0,0,.2)';
+            btnMas.style.boxShadow = '0 4px 10px rgba(100, 37, 130, 0.3)';
             btnMenos.style.background = 'transparent';
-            btnMenos.style.color = '#666';
+            btnMenos.style.color = '#8e87a2';
             btnMenos.style.boxShadow = 'none';
         } else {
             listaMenos.style.display = 'block';
             listaMas.style.display = 'none';
-            btnMenos.style.background = '#3c4858';
+            btnMenos.style.background = 'linear-gradient(90deg, #642582, #8e44ad)';
             btnMenos.style.color = '#fff';
-            btnMenos.style.boxShadow = '0 2px 5px rgba(0,0,0,.2)';
+            btnMenos.style.boxShadow = '0 4px 10px rgba(100, 37, 130, 0.3)';
             btnMas.style.background = 'transparent';
-            btnMas.style.color = '#666';
+            btnMas.style.color = '#8e87a2';
             btnMas.style.boxShadow = 'none';
         }
     }

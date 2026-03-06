@@ -25,10 +25,10 @@
 
             <!-----Venta---->
             <div class="col-12">
-                <div class="text-white bg-success p-1 text-center">
+                <div class="text-white p-1 text-center" style="background-color: #924ab0 !important;">
                     Datos generales
                 </div>
-                <div class="p-3 border border-3 border-success">
+                <div class="p-3 border border-3" style="border-color: #924ab0 !important;">
                     <div class="row g-4">
 
                         <!--Cliente-->
@@ -86,10 +86,10 @@
 
             <!------venta producto---->
             <div class="col-12">
-                <div class="text-white bg-primary p-1 text-center">
+                <div class="text-white p-1 text-center" style="background-color: #924ab0 !important;">
                     Detalles de la venta
                 </div>
-                <div class="p-3 border border-3 border-primary">
+                <div class="p-3 border border-3" style="border-color: #924ab0 !important;">
                     <div class="row gy-4">
 
                         <!-----Producto---->
@@ -153,7 +153,7 @@
                         <div class="col-12">
                             <div class="table-responsive">
                                 <table id="tabla_detalle" class="table table-hover">
-                                    <thead class="bg-primary">
+                                    <thead style="background-color: #924ab0 !important;">
                                         <tr>
                                             <th class="text-white">Producto</th>
                                             <th class="text-white">Presentación</th>
@@ -225,11 +225,11 @@
 
             <!----Finalizar venta-->
             <div class="col-12">
-                <div class="text-white bg-primary p-1 text-center">
+                <div class="text-white p-1 text-center" style="background-color: #924ab0 !important;">
                     Finalizar venta
                 </div>
 
-                <div class="p-3 border border-3 border-primary">
+                <div class="p-3 border border-3" style="border-color: #924ab0 !important;">
 
                     <div class="row gy-4">
 

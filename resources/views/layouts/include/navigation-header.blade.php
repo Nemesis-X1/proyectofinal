@@ -33,7 +33,7 @@ $empresa = Empresa::first();
 
         <!-- Notificaciones -->
         <div class="nav-item dropdown ms-2 me-2">
-            <a class="nav-link dropdown-toggle position-relative" id="notificationsDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #666;">
+            <a class="nav-link dropdown-toggle position-relative" id="notificationsDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #642582;">
                 <i class="fas fa-bell fa-fw"></i>
                 @if (auth()->user()->unreadNotifications->count() > 0)
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem; padding: 0.25em 0.5em;">
@@ -48,7 +48,7 @@ $empresa = Empresa::first();
                     <a class="dropdown-item px-3 py-3 border-bottom" href="{{ $notification->data['url'] ?? '#' }}" style="white-space: normal; transition: background 0.2s;">
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0 me-3">
-                                <span class="badge bg-primary-soft text-primary p-2" style="background-color: rgba(0, 123, 255, 0.1);">
+                                <span class="badge bg-primary-soft text-primary p-2" style="background-color: rgba(100, 37, 130, 0.1); color: #642582 !important;">
                                     <i class="fas {{ $notification->data['icon'] ?? 'fa-info-circle' }}"></i>
                                 </span>
                             </div>
@@ -70,7 +70,7 @@ $empresa = Empresa::first();
 
         <!-- Usuario -->
         <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #666;">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #642582;">
                 <i class="fas fa-user fa-fw"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
