@@ -70,7 +70,7 @@ class Compra extends Model
     {
         // Crear un nombre único
         $name = uniqid() . '.' . $file->getClientOriginalExtension();
-        $path = 'storage/' . $file->storeAs('compras', $name);
-        return $path;
+        $path = $file->storeAs('compras', $name, 'public');
+        return 'storage/' . $path;
     }
 }

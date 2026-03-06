@@ -87,12 +87,17 @@
                                 </form>
                                 @endcan
 
-                                {{-- Botón que carga el PDF dinámicamente en el modal global --}}
-                                <button type="button"
-                                    class="btn btn-primary btn-sm btn-ver-pdf"
-                                    data-path="{{ $item->comprobante_path ? asset($item->comprobante_path) : '' }}"
-                                    title="Ver PDF">
+                                <a href="{{ route('export.pdf-comprobante-compra',['id' => Crypt::encrypt($item->id)]) }}" 
+                                    target="_blank" class="btn btn-danger btn-sm" title="Exportar reporte PDF">
                                     <i class="fa-solid fa-file-pdf"></i>
+                                </a>
+
+                                {{-- Botón que carga el PDF adjunto dinámicamente en el modal global --}}
+                                <button type="button"
+                                    class="btn btn-secondary btn-sm btn-ver-pdf"
+                                    data-path="{{ $item->comprobante_path ? asset($item->comprobante_path) : '' }}"
+                                    title="Ver comprobante adjunto">
+                                    <i class="fa-solid fa-paperclip"></i>
                                 </button>
 
                             </div>

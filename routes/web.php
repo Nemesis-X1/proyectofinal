@@ -73,6 +73,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('/export-pdf-comprobante-venta/{id}', [ExportPDFController::class, 'exportPdfComprobanteVenta'])
         ->name('export.pdf-comprobante-venta');
 
+    Route::get('/export-pdf-comprobante-compra/{id}', [ExportPDFController::class, 'exportPdfComprobanteCompra'])
+        ->name('export.pdf-comprobante-compra');
+
     Route::get('/download-excel-ventas/{filename}', [ExportExcelController::class, 'downloadExcelVentas'])
         ->name('export.excel-ventas-download');
 
