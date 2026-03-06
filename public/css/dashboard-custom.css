@@ -103,7 +103,6 @@ body {
     min-width: 0;
     word-wrap: break-word;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
 }
 
 .dash-card:hover {
@@ -208,7 +207,6 @@ body {
     margin-bottom: 30px;
     padding: 20px;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
 }
 
 .chart-card:hover {
@@ -411,5 +409,4 @@ body {
     border-radius: 12px !important;
     box-shadow: var(--card-shadow) !important;
     background: var(--card-bg) !important;
-    backdrop-filter: blur(10px);
 }
