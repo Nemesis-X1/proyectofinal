@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #fce4ec 0%, #fff1f0 50%, #fdebd0 100%);
+            background: linear-gradient(135deg, #fce4ec 0%, #f9f0ffff 50%, #eac3fcff 100%);
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
@@ -91,7 +91,7 @@
 
         .input-group-custom:focus-within {
             background: rgba(240, 240, 240, 0.8);
-            box-shadow: 0 0 0 2px rgba(255, 69, 0, 0.1);
+            box-shadow: 0 0 0 2px rgba(100, 37, 130, 0.1);
         }
 
         .input-group-custom i {
@@ -126,11 +126,11 @@
             margin-right: 10px;
             width: 18px;
             height: 18px;
-            accent-color: #ff4500;
+            accent-color: #642582;
         }
 
         .btn-login {
-            background: linear-gradient(90deg, #ff4500, #ff6347);
+            background: linear-gradient(90deg, #642582, #8e44ad);
             border: none;
             border-radius: 15px;
             color: white;
@@ -143,14 +143,14 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(255, 69, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(100, 37, 130, 0.3);
             cursor: pointer;
             text-transform: uppercase;
         }
 
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(255, 69, 0, 0.4);
+            box-shadow: 0 15px 30px rgba(100, 37, 130, 0.4);
         }
 
         .btn-login:active {
