@@ -40,7 +40,6 @@
                         <th>Precio</th>
                         <th>Marca</th>
                         <th>Categoría</th>
-                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -59,10 +58,7 @@
                         <td>
                             {{$item->categoria->caracteristica->nombre ?? 'Sin categoría'}}
                         </td>
-                        <td>
-                            <span class="badge rounded-pill text-bg-{{ $item->estado ? 'success' : 'danger' }}">
-                                {{ $item->estado ? 'Activo' : 'Inactivo'}}</span>
-                        </td>
+
                         <td>
                             <div class="d-flex justify-content-center gap-2">
                                 <!-----Editar Producto--->

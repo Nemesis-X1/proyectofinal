@@ -16,7 +16,7 @@ class ProductoService
     public function crearProducto(array $data): Producto
     {
         $producto = DB::transaction(function () use ($data) {
-            $estadoProducto = array_key_exists('estado', $data) ? (int)$data['estado'] : 0;
+            $estadoProducto = array_key_exists('estado', $data) ? (int)$data['estado'] : 1;
 
             $producto = Producto::create([
                 'codigo' => $data['codigo'],
